@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.loganalyzer.models.filepath.FilePathHelper.extractAppIdFromLogPath;
-import static com.loganalyzer.models.filepath.FilePathHelper.listFilesInPath;
+import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
 
 
 public class FilePathsToProtonLogs implements FilePathToLogs {
@@ -31,10 +31,6 @@ public class FilePathsToProtonLogs implements FilePathToLogs {
         scanForProtonLogFiles();
     }
 
-    @Override
-    public List<Path> getFilePaths() {
-        return logFiles;
-    }
 
     private void scanForProtonLogFiles() {
         List<Path> allFiles;
@@ -43,7 +39,7 @@ public class FilePathsToProtonLogs implements FilePathToLogs {
 
 
         try {
-            allFiles = listFilesInPath(path);
+            allFiles = getFilesInFolder(path);
         } catch (IOException e) {
             System.out.println("Failed to list files in path:" + path + e);
             return;

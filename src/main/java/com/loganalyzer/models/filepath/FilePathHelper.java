@@ -5,9 +5,7 @@ import com.loganalyzer.FilePathToLogs;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class FilePathHelper {
 
@@ -20,23 +18,21 @@ public class FilePathHelper {
     }
 
     public static List<Path> convertFilePathsToLogs_ToPaths(List<FilePathToLogs> filePathToLogs) {
-        List<Path> allFiles = new ArrayList<>();
-        //För proton
-        for(FilePathToLogs fp : filePathToLogs){
-            var tempList = fp.getFilePaths();
-            allFiles.addAll(tempList);
-        }
-        return allFiles;
+        return filePathToLogs.stream()
+                .flatMap(f -> f.getLogFiles().stream())
+                .toList();
     }
 
-    public static List<Path> listFilesInPath(Path basePath) throws IOException {
-        if (!Files.exists(basePath)) {
-            System.out.println("The path: " + basePath + " does not exist");
+    public static List<Path> getFilesInFolder(Path basePath) throws IOException {
+        if (Files.notExists(basePath)) {
+            System.out.println("The path does not exist: " + basePath);
             return List.of();
         }
 
-        try (Stream<Path> stream = Files.list(basePath)) {
-            return stream.filter(Files::isRegularFile).toList();
+        try (var stream = Files.list(basePath)) {
+            return stream
+                    .filter(Files::isRegularFile)
+                    .toList();
         }
     }
 

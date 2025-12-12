@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.loganalyzer.models.filepath.FilePathHelper.listFilesInPath;
+import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
 
 public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
     List<Path> logFiles;
@@ -19,11 +19,6 @@ public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
         scanForAmdLogFiles();
     }
 
-    @Override
-    public List<Path> getFilePaths() {
-        return this.logFiles;
-    }
-
     private void scanForAmdLogFiles() {
         List<Path> allFiles;
         Path path = Paths.get(System.getProperty("user.home"),"somefolder");
@@ -31,7 +26,7 @@ public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
 
 
         try {
-            allFiles = listFilesInPath(path);
+            allFiles = getFilesInFolder(path);
         } catch (IOException e) {
             System.out.println("Failed to list files in path:" + path + e);
             return;
