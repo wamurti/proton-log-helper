@@ -1,8 +1,7 @@
-package dev.loganalyzer.models.datasource;
+package com.loganalyzer.models.datasource;
 
-import dev.loganalyzer.GameDataSource;
+import com.loganalyzer.GameDataSource;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 public class DataSourceHelper {

@@ -1,9 +1,9 @@
-package dev.loganalyzer;
+package com.loganalyzer;
 
-import dev.loganalyzer.factory.DataSourceFactory;
-import dev.loganalyzer.factory.FilePathFactory;
-import dev.loganalyzer.models.filepath.FilePathsToProtonLogs;
-import dev.loganalyzer.view.Presenter;
+import com.loganalyzer.factory.DataSourceFactory;
+import com.loganalyzer.factory.FilePathFactory;
+import com.loganalyzer.models.filepath.FilePathsToProtonLogs;
+import com.loganalyzer.view.Presenter;
 
 import java.util.ArrayList;
 import java.util.List;

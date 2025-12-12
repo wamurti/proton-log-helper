@@ -1,16 +1,14 @@
-package dev.loganalyzer.view;
+package com.loganalyzer.view;
 
-import dev.loganalyzer.FilePathToLogs;
-import dev.loganalyzer.GameDataSource;
-import dev.loganalyzer.models.datasource.*;
-import dev.loganalyzer.models.filepath.FilePathHelper;
-import dev.loganalyzer.models.filepath.FilePathsToProtonLogs;
+import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.GameDataSource;
+import com.loganalyzer.models.datasource.*;
+import com.loganalyzer.models.filepath.FilePathHelper;
+import com.loganalyzer.models.filepath.FilePathsToProtonLogs;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class Presenter {
     public static void present(List<GameDataSource> allDataSources, List<FilePathToLogs> allFilePaths){
@@ -26,7 +24,7 @@ public class Presenter {
                         .toList();
 
 
-
+        List<Path> amdPaths = FilePathHelper.getAmdPaths(allFilePaths);
         List<Path> allFiles = FilePathHelper.convertFilePathsToLogs_ToPaths(allFilePaths);
         List<String> appIds =
                 allFilePaths.stream()
@@ -53,7 +51,7 @@ public class Presenter {
         }
         System.out.println("---------------------------------------");
         System.out.println();
-        System.out.println("Amd Logs found: "+appIds.size());
+        System.out.println("Amd Logs found: "+amdPaths.size());
 
         //För Amd
 

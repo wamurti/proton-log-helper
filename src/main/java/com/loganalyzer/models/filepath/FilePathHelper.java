@@ -1,6 +1,6 @@
-package dev.loganalyzer.models.filepath;
+package com.loganalyzer.models.filepath;
 
-import dev.loganalyzer.FilePathToLogs;
+import com.loganalyzer.FilePathToLogs;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,6 +10,15 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class FilePathHelper {
+
+    public static List<Path> getAmdPaths(List<FilePathToLogs> filePathToLogs) {
+        return filePathToLogs.stream()
+                .filter(FilePathToLogs::isAmdHardwareLoggs)
+                .map(FilePathToLogs::getLogFiles)
+                .findFirst()
+                .orElse(null);
+    }
+
     public static List<Path> convertFilePathsToLogs_ToPaths(List<FilePathToLogs> filePathToLogs) {
         List<Path> allFiles = new ArrayList<>();
         //För proton

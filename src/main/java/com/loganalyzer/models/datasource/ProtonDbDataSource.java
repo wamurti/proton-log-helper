@@ -1,6 +1,6 @@
-package dev.loganalyzer.models.datasource;
+package com.loganalyzer.models.datasource;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.loganalyzer.GameDataSource;
+import com.loganalyzer.GameDataSource;
 
 import java.io.IOException;
 import java.net.URI;

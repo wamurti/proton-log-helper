@@ -1,6 +1,6 @@
-package dev.loganalyzer.factory;
-import dev.loganalyzer.models.filepath.FilePathsToAmdHardwareLogs;
-import dev.loganalyzer.models.filepath.FilePathsToProtonLogs;
+package com.loganalyzer.factory;
+import com.loganalyzer.models.filepath.FilePathsToAmdHardwareLogs;
+import com.loganalyzer.models.filepath.FilePathsToProtonLogs;
 
 public class FilePathFactory {
     private static FilePathsToProtonLogs filePathsToProtonLogsInstance;

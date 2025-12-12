@@ -1,4 +1,4 @@
-package dev.loganalyzer.models.datasource;
+package com.loganalyzer.models.datasource;
 
 public class ProtonDbDetails {
     public String getAppId() {

@@ -1,8 +1,7 @@
-package dev.loganalyzer.models.datasource;
+package com.loganalyzer.models.datasource;
 
-import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.loganalyzer.GameDataSource;
+import com.loganalyzer.GameDataSource;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,7 +10,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class SteamDataSource implements GameDataSource {
     HttpClient httpClient;

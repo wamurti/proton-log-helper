@@ -1,4 +1,4 @@
-package dev.loganalyzer.models.datasource;
+package com.loganalyzer.models.datasource;
 
 import java.util.List;
 

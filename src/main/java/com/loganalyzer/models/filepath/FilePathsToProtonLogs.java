@@ -1,6 +1,6 @@
-package dev.loganalyzer.models.filepath;
+package com.loganalyzer.models.filepath;
 
-import dev.loganalyzer.FilePathToLogs;
+import com.loganalyzer.FilePathToLogs;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -8,14 +8,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static dev.loganalyzer.models.filepath.FilePathHelper.extractAppIdFromLogPath;
-import static dev.loganalyzer.models.filepath.FilePathHelper.listFilesInPath;
+import static com.loganalyzer.models.filepath.FilePathHelper.extractAppIdFromLogPath;
+import static com.loganalyzer.models.filepath.FilePathHelper.listFilesInPath;
 
 
 public class FilePathsToProtonLogs implements FilePathToLogs {
-    public List<Path> getLogFiles() {
-        return logFiles;
-    }
+    @Override
+    public boolean isAmdHardwareLoggs() { return false; }
 
     public List<String> getAppIds() {
         return appIds;
@@ -23,6 +22,9 @@ public class FilePathsToProtonLogs implements FilePathToLogs {
 
     List<Path> logFiles;
     List<String> appIds;
+    public List<Path> getLogFiles() {
+        return logFiles;
+    }
     @Override
     public void fetchFilePaths() {
         System.out.println("Fetching file paths for Proton logs");

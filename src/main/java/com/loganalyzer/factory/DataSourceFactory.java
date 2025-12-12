@@ -1,10 +1,10 @@
-package dev.loganalyzer.factory;
+package com.loganalyzer.factory;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.loganalyzer.GameDataSource;
-import dev.loganalyzer.models.datasource.ProtonDbDataSource;
-import dev.loganalyzer.models.datasource.SteamDataSource;
+import com.loganalyzer.GameDataSource;
+import com.loganalyzer.models.datasource.ProtonDbDataSource;
+import com.loganalyzer.models.datasource.SteamDataSource;
 
 import java.net.http.HttpClient;
 
