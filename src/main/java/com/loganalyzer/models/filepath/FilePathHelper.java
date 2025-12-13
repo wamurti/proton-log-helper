@@ -1,6 +1,7 @@
 package com.loganalyzer.models.filepath;
 
 import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.LogType;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,12 +10,11 @@ import java.util.List;
 
 public class FilePathHelper {
 
-    public static List<Path> getAmdPaths(List<FilePathToLogs> filePathToLogs) {
+    public static List<Path> getPathsByLogType(List<FilePathToLogs> filePathToLogs, LogType logType) {
         return filePathToLogs.stream()
-                .filter(FilePathToLogs::isAmdHardwareLoggs)
-                .map(FilePathToLogs::getLogFiles)
-                .findFirst()
-                .orElse(null);
+                .filter(fp -> fp.getLogType() == logType)
+                .flatMap(fp -> fp.getLogFiles().stream())
+                .toList();
     }
 
     public static List<Path> convertFilePathsToLogs_ToPaths(List<FilePathToLogs> filePathToLogs) {

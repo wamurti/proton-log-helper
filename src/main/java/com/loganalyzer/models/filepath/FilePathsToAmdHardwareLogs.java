@@ -1,10 +1,13 @@
 package com.loganalyzer.models.filepath;
 
 import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.LogType;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
@@ -12,7 +15,7 @@ import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
 public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
     List<Path> logFiles;
     @Override
-    public boolean isAmdHardwareLoggs() { return true; }
+    public LogType getLogType() { return LogType.AMD_HARDWARE; }
     @Override
     public void fetchFilePaths() {
         System.out.println("Fetching file paths for Amd hardware");
@@ -51,6 +54,11 @@ public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
 
     public List<Path> getLogFiles() {
         return logFiles;
+    }
+
+    @Override
+    public List<String> getAppIds() {
+        return Collections.emptyList();
     }
 
     @Override

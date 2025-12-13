@@ -2,9 +2,9 @@ package com.loganalyzer.view;
 
 import com.loganalyzer.FilePathToLogs;
 import com.loganalyzer.GameDataSource;
+import com.loganalyzer.LogType;
 import com.loganalyzer.models.datasource.*;
 import com.loganalyzer.models.filepath.FilePathHelper;
-import com.loganalyzer.models.filepath.FilePathsToProtonLogs;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -24,12 +24,10 @@ public class Presenter {
                         .toList();
 
 
-        List<Path> amdPaths = FilePathHelper.getAmdPaths(allFilePaths);
+        List<Path> amdPaths = FilePathHelper.getPathsByLogType(allFilePaths, LogType.AMD_HARDWARE);
         List<Path> allFiles = FilePathHelper.convertFilePathsToLogs_ToPaths(allFilePaths);
         List<String> appIds =
                 allFilePaths.stream()
-                        .filter(FilePathsToProtonLogs.class::isInstance)
-                        .map(FilePathsToProtonLogs.class::cast)
                         .flatMap(fp -> fp.getAppIds().stream())
                         .toList();
 

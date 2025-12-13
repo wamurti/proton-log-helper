@@ -1,6 +1,7 @@
 package com.loganalyzer.models.filepath;
 
 import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.LogType;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -14,7 +15,7 @@ import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
 
 public class FilePathsToProtonLogs implements FilePathToLogs {
     @Override
-    public boolean isAmdHardwareLoggs() { return false; }
+    public LogType getLogType() { return LogType.PROTON; }
 
     public List<String> getAppIds() {
         return appIds;

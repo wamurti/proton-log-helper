@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface FilePathToLogs {
     void fetchFilePaths();
-    boolean isAmdHardwareLoggs();
+    LogType getLogType();
     List<Path> getLogFiles();
+    List<String> getAppIds();
 }

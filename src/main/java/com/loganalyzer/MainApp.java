@@ -2,7 +2,6 @@ package com.loganalyzer;
 
 import com.loganalyzer.factory.DataSourceFactory;
 import com.loganalyzer.factory.FilePathFactory;
-import com.loganalyzer.models.filepath.FilePathsToProtonLogs;
 import com.loganalyzer.view.Presenter;
 
 import java.util.ArrayList;
@@ -24,27 +23,27 @@ public class MainApp {
         List<String> foundAppIds = new ArrayList<>();
         for (FilePathToLogs filePath : filePathsToLogs) {
             filePath.fetchFilePaths();
-            if(filePath.getClass().equals(FilePathsToProtonLogs.class)){
-                foundAppIds = ((FilePathsToProtonLogs) filePath).getAppIds();
-            }
+            foundAppIds.addAll(filePath.getAppIds());
         }
 
         System.out.println("Getting extra data from web.");
 
         //Collecting gameData from web
         for (GameDataSource source : gameDetailsSources) {
-            try{
-                for(String appId : foundAppIds){
+
+            for (String appId : foundAppIds) {
+                try {
                     source.fetchDataFromWeb(appId);
+                } catch (Exception e) {
+                    System.out.println("Error while fetching data " + e.getMessage());
                 }
-            } catch (Exception e) {
-                System.out.println("Error while fetching data "+e.getMessage());
             }
         }
 
         //Display relevant info to user
-        Presenter.present(gameDetailsSources, filePathsToLogs);
+        Presenter.present(gameDetailsSources,filePathsToLogs);
     }
+
     public static void main(String[] args) {
         // Skapa och hämta filePaths för proton och hårdvaruloggar
         FilePathToLogs protonFilePaths = FilePathFactory.createProtonLogsSingleton();
@@ -63,8 +62,7 @@ public class MainApp {
         listOfAllDataSources.add(steam);
 
 
-
-        MainApp app = new MainApp(listOfAllDataSources,listOfAllFilePathsToLogs);
+        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs);
 
         app.run();
     }
