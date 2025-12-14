@@ -50,7 +50,6 @@ public class ProtonDbInfoProvider implements GameInfoProvider {
             throw new RuntimeException("HTTP error: " + response.statusCode());
         }
 
-        // Deserialisera JSON → Root
         objectMapper.configure(com.fasterxml.jackson.databind.DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
         ProtonDbDetails protonDbDetails = objectMapper.readValue(response.body(), ProtonDbDetails.class);
