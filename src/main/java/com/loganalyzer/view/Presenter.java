@@ -25,7 +25,7 @@ public class Presenter {
                         .toList();
 
 
-        List<Path> amdPaths = FilePathHelper.getPathsByLogType(allFilePaths, LogType.AMD_HARDWARE);
+        List<Path> amdPaths = FilePathHelper.getPathsByLogType(allFilePaths, LogType.AMD);
         List<Path> allFiles = FilePathHelper.convertFilePathsToLogs_ToPaths(allFilePaths);
         List<String> appIds =
                 allFilePaths.stream()

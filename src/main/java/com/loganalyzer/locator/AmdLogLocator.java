@@ -14,7 +14,7 @@ import static com.loganalyzer.util.FilePathHelper.getFilesInFolder;
 public class AmdLogLocator implements LogFileLocator {
     List<Path> logFiles;
     @Override
-    public LogType getLogType() { return LogType.AMD_HARDWARE; }
+    public LogType getLogType() { return LogType.AMD; }
     @Override
     public void fetchFilePaths() {
         System.out.println("Fetching file paths for Amd hardware");
