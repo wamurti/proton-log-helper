@@ -1,27 +1,29 @@
 package com.loganalyzer;
 
-import com.loganalyzer.factory.DataSourceFactory;
-import com.loganalyzer.factory.FilePathFactory;
+import com.loganalyzer.api.GameInfoProvider;
+import com.loganalyzer.api.LogFileLocator;
+import com.loganalyzer.factory.GameInfoProviderFactory;
+import com.loganalyzer.factory.LogLocatorFactory;
 import com.loganalyzer.view.Presenter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainApp {
-    private final List<GameDataSource> gameDetailsSources;
-    private final List<FilePathToLogs> filePathsToLogs;
+    private final List<GameInfoProvider> gameInfoProviders;
+    private final List<LogFileLocator> logFileLocators;
 
 
-    public MainApp(List<GameDataSource> gameDetailsSources, List<FilePathToLogs> filePathsToLogs) {
-        this.gameDetailsSources = gameDetailsSources;
-        this.filePathsToLogs = filePathsToLogs;
+    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators) {
+        this.gameInfoProviders = gameInfoProviders;
+        this.logFileLocators = logFileLocators;
     }
 
     public void run() {
 
         //Collecting file paths
         List<String> foundAppIds = new ArrayList<>();
-        for (FilePathToLogs filePath : filePathsToLogs) {
+        for (LogFileLocator filePath : logFileLocators) {
             filePath.fetchFilePaths();
             foundAppIds.addAll(filePath.getAppIds());
         }
@@ -29,7 +31,7 @@ public class MainApp {
         System.out.println("Getting extra data from web.");
 
         //Collecting gameData from web
-        for (GameDataSource source : gameDetailsSources) {
+        for (GameInfoProvider source : gameInfoProviders) {
 
             for (String appId : foundAppIds) {
                 try {
@@ -41,23 +43,23 @@ public class MainApp {
         }
 
         //Display relevant info to user
-        Presenter.present(gameDetailsSources,filePathsToLogs);
+        Presenter.present(gameInfoProviders, logFileLocators);
     }
 
     public static void main(String[] args) {
         // Skapa och hämta filePaths för proton och hårdvaruloggar
-        FilePathToLogs protonFilePaths = FilePathFactory.createProtonLogsSingleton();
-        FilePathToLogs amdFilePaths = FilePathFactory.createAmdHardwareLogsSingleton();
+        LogFileLocator protonFilePaths = LogLocatorFactory.createProtonLogLocatorSingleton();
+        LogFileLocator amdFilePaths = LogLocatorFactory.createAmdLogLocatorSingleton();
 
-        List<FilePathToLogs> listOfAllFilePathsToLogs = new ArrayList<>();
+        List<LogFileLocator> listOfAllFilePathsToLogs = new ArrayList<>();
         listOfAllFilePathsToLogs.add(protonFilePaths);
         listOfAllFilePathsToLogs.add(amdFilePaths);
 
         //Skapa och hämta data från filerna
-        GameDataSource proton = DataSourceFactory.createProtonDbSingleton();
-        GameDataSource steam = DataSourceFactory.createSteamDbSingleton();
+        GameInfoProvider proton = GameInfoProviderFactory.createProtonDbSingleton();
+        GameInfoProvider steam = GameInfoProviderFactory.createSteamDbSingleton();
 
-        List<GameDataSource> listOfAllDataSources = new ArrayList<>();
+        List<GameInfoProvider> listOfAllDataSources = new ArrayList<>();
         listOfAllDataSources.add(proton);
         listOfAllDataSources.add(steam);
 

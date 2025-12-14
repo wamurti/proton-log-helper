@@ -1,6 +1,6 @@
-package com.loganalyzer.models.filepath;
+package com.loganalyzer.util;
 
-import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.api.LogFileLocator;
 import com.loganalyzer.LogType;
 
 import java.io.IOException;
@@ -10,15 +10,15 @@ import java.util.List;
 
 public class FilePathHelper {
 
-    public static List<Path> getPathsByLogType(List<FilePathToLogs> filePathToLogs, LogType logType) {
-        return filePathToLogs.stream()
+    public static List<Path> getPathsByLogType(List<LogFileLocator> logFilePathToLogs, LogType logType) {
+        return logFilePathToLogs.stream()
                 .filter(fp -> fp.getLogType() == logType)
                 .flatMap(fp -> fp.getLogFiles().stream())
                 .toList();
     }
 
-    public static List<Path> convertFilePathsToLogs_ToPaths(List<FilePathToLogs> filePathToLogs) {
-        return filePathToLogs.stream()
+    public static List<Path> convertFilePathsToLogs_ToPaths(List<LogFileLocator> logFilePathToLogs) {
+        return logFilePathToLogs.stream()
                 .flatMap(f -> f.getLogFiles().stream())
                 .toList();
     }

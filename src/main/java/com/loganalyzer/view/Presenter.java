@@ -1,25 +1,26 @@
 package com.loganalyzer.view;
 
-import com.loganalyzer.FilePathToLogs;
-import com.loganalyzer.GameDataSource;
+import com.loganalyzer.api.LogFileLocator;
+import com.loganalyzer.api.GameInfoProvider;
 import com.loganalyzer.LogType;
-import com.loganalyzer.models.datasource.*;
-import com.loganalyzer.models.filepath.FilePathHelper;
+import com.loganalyzer.model.datasource.*;
+import com.loganalyzer.util.FilePathHelper;
+import com.loganalyzer.util.DataSourceHelper;
 
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 
 public class Presenter {
-    public static void present(List<GameDataSource> allDataSources, List<FilePathToLogs> allFilePaths){
+    public static void present(List<GameInfoProvider> allDataSources, List<LogFileLocator> allFilePaths){
 
         List<ProtonDbDetails> protonDbDetails = DataSourceHelper.getProtonDbDataSource(allDataSources).getProtonDbDetails();
-        List<GameDetails> gameDetails = DataSourceHelper.getSteamDataSource(allDataSources).getGameDetailsSteam();
+        List<SteamGameResponse> steamGameDetails = DataSourceHelper.getSteamDataSource(allDataSources).getGameDetailsSteam();
 
-        List<AppData> gameDetailsSteam =
-                gameDetails.stream()
+        List<SteamAppData> gameDetailsSteam =
+                steamGameDetails.stream()
                         .flatMap(gd -> gd.getEntries().values().stream())  // AppEntry
-                        .map(AppEntry::getData)
+                        .map(SteamAppEntry::getData)
                         .filter(Objects::nonNull)
                         .toList();
 
@@ -38,12 +39,12 @@ public class Presenter {
         System.out.println();
 
         System.out.println("Games found: "+appIds.size());
-        for(AppData appData : gameDetailsSteam){
-            String appIdString = String.valueOf(appData.getSteam_appid());
-            System.out.println(appData.getName()+" --> "+appData.getSteam_appid());
+        for(SteamAppData steamAppData : gameDetailsSteam){
+            String appIdString = String.valueOf(steamAppData.getSteam_appid());
+            System.out.println(steamAppData.getName()+" --> "+ steamAppData.getSteam_appid());
             protonDbDetails.stream().filter(pd-> pd.getAppId().equals(appIdString)).findFirst().ifPresent(pd->{
                 System.out.println("Tier: "+pd.getTrendingTier()+"\nScore: "+pd.getScore()+"\nReviews: "+pd.getTotal());
-                System.out.println("Native support for: "+appData.getPlatforms());
+                System.out.println("Native support for: "+ steamAppData.getPlatforms());
                 System.out.println();
             });
         }

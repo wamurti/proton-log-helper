@@ -1,9 +1,11 @@
-package com.loganalyzer;
+package com.loganalyzer.api;
+
+import com.loganalyzer.LogType;
 
 import java.nio.file.Path;
 import java.util.List;
 
-public interface FilePathToLogs {
+public interface LogFileLocator {
     void fetchFilePaths();
     LogType getLogType();
     List<Path> getLogFiles();

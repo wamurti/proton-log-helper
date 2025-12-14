@@ -1,8 +1,8 @@
-package com.loganalyzer.models.datasource;
+package com.loganalyzer.model.datasource;
 
 import java.util.List;
 
-public class AppData {
+public class SteamAppData {
     private String name;
     private int steam_appid;
     private Requirements pc_requirements;

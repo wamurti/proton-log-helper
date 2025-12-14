@@ -1,6 +1,6 @@
-package com.loganalyzer.models.filepath;
+package com.loganalyzer.locator;
 
-import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.api.LogFileLocator;
 import com.loganalyzer.LogType;
 
 import java.io.IOException;
@@ -9,11 +9,11 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.loganalyzer.models.filepath.FilePathHelper.extractAppIdFromLogPath;
-import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
+import static com.loganalyzer.util.FilePathHelper.extractAppIdFromLogPath;
+import static com.loganalyzer.util.FilePathHelper.getFilesInFolder;
 
 
-public class FilePathsToProtonLogs implements FilePathToLogs {
+public class ProtonLogLocator implements LogFileLocator {
     @Override
     public LogType getLogType() { return LogType.PROTON; }
 

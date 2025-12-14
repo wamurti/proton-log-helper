@@ -1,18 +1,17 @@
-package com.loganalyzer.models.filepath;
+package com.loganalyzer.locator;
 
-import com.loganalyzer.FilePathToLogs;
+import com.loganalyzer.api.LogFileLocator;
 import com.loganalyzer.LogType;
 
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import static com.loganalyzer.models.filepath.FilePathHelper.getFilesInFolder;
+import static com.loganalyzer.util.FilePathHelper.getFilesInFolder;
 
-public class FilePathsToAmdHardwareLogs implements FilePathToLogs {
+public class AmdLogLocator implements LogFileLocator {
     List<Path> logFiles;
     @Override
     public LogType getLogType() { return LogType.AMD_HARDWARE; }
