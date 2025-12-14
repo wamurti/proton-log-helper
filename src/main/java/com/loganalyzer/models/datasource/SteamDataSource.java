@@ -22,14 +22,13 @@ public class SteamDataSource implements GameDataSource {
     }
 
     @Override
-    public SteamDataSource fetchDataFromWeb(String appId) {
+    public void fetchDataFromWeb(String appId) {
         System.out.println("Fetching steamDb data for appId: "+appId);
         try{
             fetchGameDetails(appId);
         }catch(Exception e){
             System.out.println("Error fetching steamDb data for appId: "+appId);
         }
-        return this;
 
     }
     private void fetchGameDetails(String appId) throws IOException, InterruptedException {

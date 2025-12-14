@@ -22,7 +22,7 @@ public class ProtonDbDataSource implements GameDataSource {
     }
 
     @Override
-    public GameDataSource fetchDataFromWeb(String appId) {
+    public void fetchDataFromWeb(String appId) {
         System.out.println("Fetching protonDb data for appId: " + appId);
         try {
             fetchGameDetails(appId);
@@ -31,7 +31,6 @@ public class ProtonDbDataSource implements GameDataSource {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        return this;
     }
 
     private void fetchGameDetails(String appId) throws IOException, InterruptedException {
