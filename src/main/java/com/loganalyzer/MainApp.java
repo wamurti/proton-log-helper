@@ -30,24 +30,18 @@ public class MainApp {
 
         System.out.println("Getting extra data from web.");
 
-        //Collecting gameData from web
+        //Collecting gameData
         for (GameInfoProvider source : gameInfoProviders) {
 
-            for (String appId : foundAppIds) {
-                try {
-                    source.fetchDataFromWeb(appId);
-                } catch (Exception e) {
-                    System.out.println("Error while fetching data " + e.getMessage());
-                }
-            }
+            source.fetchDataFromWebAsync(foundAppIds);
         }
 
-        //Display relevant info to user
+        //Display relevant info
         Presenter.present(gameInfoProviders, logFileLocators);
     }
 
     public static void main(String[] args) {
-        // Skapa och hämta filePaths för proton och hårdvaruloggar
+
         LogFileLocator protonFilePaths = LogLocatorFactory.createProtonLogLocatorSingleton();
         LogFileLocator amdFilePaths = LogLocatorFactory.createAmdLogLocatorSingleton();
 
@@ -55,7 +49,6 @@ public class MainApp {
         listOfAllFilePathsToLogs.add(protonFilePaths);
         listOfAllFilePathsToLogs.add(amdFilePaths);
 
-        //Skapa och hämta data från filerna
         GameInfoProvider proton = GameInfoProviderFactory.createProtonDbSingleton();
         GameInfoProvider steam = GameInfoProviderFactory.createSteamDbSingleton();
 

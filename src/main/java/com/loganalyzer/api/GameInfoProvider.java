@@ -1,5 +1,7 @@
 package com.loganalyzer.api;
 
+import java.util.List;
+
 public interface GameInfoProvider {
-    void fetchDataFromWeb(String appId);
+    void fetchDataFromWebAsync(List<String> appIds);
 }

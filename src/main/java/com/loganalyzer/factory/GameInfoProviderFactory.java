@@ -14,6 +14,7 @@ public class GameInfoProviderFactory {
     private static final HttpClient client = HttpClient.newHttpClient();
     private static final ObjectMapper mapper = new ObjectMapper();
 
+
     public static GameInfoProvider createProtonDbSingleton() {
         if(protonDbDataSourceInstance == null){
             return new ProtonDbInfoProvider(client,mapper);
