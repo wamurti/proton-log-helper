@@ -6,7 +6,9 @@ import com.loganalyzer.LogType;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class FilePathHelper {
 
@@ -39,6 +41,26 @@ public class FilePathHelper {
     public static String extractAppIdFromLogPath(Path logPath){
         String fileName = logPath.getFileName().toString();
         return fileName.replaceAll("\\D+", "");
+    }
+    public static Map<Path, List<String>> getLogsContent(List<LogFileLocator> logFilePathToLogs) {
+        List<Path> protonLogs = convertFilePathsToLogs_ToPaths(logFilePathToLogs);
+        System.out.println("Getting file contents for Proton logs");
+        try {
+            Map<Path, List<String>> result = new HashMap<>();
+            for (Path path : protonLogs) {
+                if(Files.size(path) != 0){
+                    result.put(path, Files.readAllLines(path));
+                }else {
+                    System.out.println("File is empty: "+path+" Skipping..");
+                }
+
+            }
+            return result;
+        }
+        catch (IOException e) {
+            System.out.println("Failed to read log files: " + e);
+        }
+        return new HashMap<>();
     }
 
 }

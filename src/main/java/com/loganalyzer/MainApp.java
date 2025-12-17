@@ -2,8 +2,10 @@ package com.loganalyzer;
 
 import com.loganalyzer.api.GameInfoProvider;
 import com.loganalyzer.api.LogFileLocator;
+import com.loganalyzer.scanner.Troubleshooter;
 import com.loganalyzer.factory.GameInfoProviderFactory;
 import com.loganalyzer.factory.LogLocatorFactory;
+import com.loganalyzer.factory.TroubleshooterFactory;
 import com.loganalyzer.view.Presenter;
 
 import java.util.ArrayList;
@@ -12,11 +14,12 @@ import java.util.List;
 public class MainApp {
     private final List<GameInfoProvider> gameInfoProviders;
     private final List<LogFileLocator> logFileLocators;
+    private final Troubleshooter troubleshooter;
 
-
-    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators) {
+    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators, Troubleshooter troubleshooter) {
         this.gameInfoProviders = gameInfoProviders;
         this.logFileLocators = logFileLocators;
+        this.troubleshooter = troubleshooter;
     }
 
     public void run() {
@@ -38,6 +41,10 @@ public class MainApp {
 
         //Display relevant info
         Presenter.present(gameInfoProviders, logFileLocators);
+
+        //Scan the proton log files and collect errors
+        troubleshooter.troubleShoot(logFileLocators);
+
     }
 
     public static void main(String[] args) {
@@ -56,8 +63,10 @@ public class MainApp {
         listOfAllDataSources.add(proton);
         listOfAllDataSources.add(steam);
 
+        Troubleshooter troubleshooter = TroubleshooterFactory.createTroubleshooterSingleton();
 
-        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs);
+
+        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs,troubleshooter);
 
         app.run();
     }
