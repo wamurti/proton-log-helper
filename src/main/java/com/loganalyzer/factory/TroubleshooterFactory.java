@@ -2,24 +2,19 @@ package com.loganalyzer.factory;
 
 import com.loganalyzer.api.scanner.LogAnalyzer;
 import com.loganalyzer.scanner.SystemInfoAnalyzer;
-import com.loganalyzer.scanner.Troubleshooter;
+
 
 import java.util.List;
 
 public class TroubleshooterFactory {
-    private static Troubleshooter instance;
+    private static SystemInfoAnalyzer systemInfoAnalyzerInstance;
 
-    public static Troubleshooter createTroubleshooterSingleton() {
-        if (instance == null) {
-            List<LogAnalyzer> analyzers = List.of(
-                    new SystemInfoAnalyzer()
-                    // Add more analyzers here:
-                    // new ErrorAnalyzer(),
-                    // new CrashAnalyzer(),
-                    // new VulkanAnalyzer()
-            );
-            instance = new Troubleshooter(analyzers);
+    public static SystemInfoAnalyzer createSystemInfoAnalyzerSingleton() {
+        if (systemInfoAnalyzerInstance == null) {
+            return new SystemInfoAnalyzer();
         }
-        return instance;
+        else {
+            return systemInfoAnalyzerInstance;
+        }
     }
 }

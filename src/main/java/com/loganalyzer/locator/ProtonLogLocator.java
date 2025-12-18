@@ -14,15 +14,15 @@ import static com.loganalyzer.util.FilePathHelper.getFilesInFolder;
 
 
 public class ProtonLogLocator implements LogFileLocator {
+
+    List<Path> logFiles;
+    List<String> appIds;
     @Override
     public LogType getLogType() { return LogType.PROTON; }
 
     public List<String> getAppIds() {
         return appIds;
     }
-
-    List<Path> logFiles;
-    List<String> appIds;
     public List<Path> getLogFiles() {
         return logFiles;
     }

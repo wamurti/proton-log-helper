@@ -2,10 +2,12 @@ package com.loganalyzer;
 
 import com.loganalyzer.api.GameInfoProvider;
 import com.loganalyzer.api.LogFileLocator;
-import com.loganalyzer.scanner.Troubleshooter;
+import com.loganalyzer.api.scanner.LogAnalyzer;
+import com.loganalyzer.scanner.SystemInfoAnalyzer;
 import com.loganalyzer.factory.GameInfoProviderFactory;
 import com.loganalyzer.factory.LogLocatorFactory;
 import com.loganalyzer.factory.TroubleshooterFactory;
+import com.loganalyzer.util.FilePathHelper;
 import com.loganalyzer.view.Presenter;
 
 import java.util.ArrayList;
@@ -14,12 +16,12 @@ import java.util.List;
 public class MainApp {
     private final List<GameInfoProvider> gameInfoProviders;
     private final List<LogFileLocator> logFileLocators;
-    private final Troubleshooter troubleshooter;
+    private final List<LogAnalyzer> logAnalyzers;
 
-    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators, Troubleshooter troubleshooter) {
+    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators, List<LogAnalyzer> logAnalyzers) {
         this.gameInfoProviders = gameInfoProviders;
         this.logFileLocators = logFileLocators;
-        this.troubleshooter = troubleshooter;
+        this.logAnalyzers = logAnalyzers;
     }
 
     public void run() {
@@ -43,7 +45,12 @@ public class MainApp {
         Presenter.present(gameInfoProviders, logFileLocators);
 
         //Scan the proton log files and collect errors
-        troubleshooter.troubleShoot(logFileLocators);
+        for (LogAnalyzer analyzer : logAnalyzers) {
+            analyzer.analyze(FilePathHelper.getLogsContent(logFileLocators));
+            var here = analyzer.getAnalyzerResults();
+            System.out.println("Analyzer results: " + here.size());
+        }
+
 
     }
 
@@ -63,10 +70,14 @@ public class MainApp {
         listOfAllDataSources.add(proton);
         listOfAllDataSources.add(steam);
 
-        Troubleshooter troubleshooter = TroubleshooterFactory.createTroubleshooterSingleton();
+        List<LogAnalyzer> listOfAllLogAnalyzers = new ArrayList<>();
+        SystemInfoAnalyzer systemInfoAnalyzer = TroubleshooterFactory.createSystemInfoAnalyzerSingleton();
+        // You can add more analyzers here in the future
+        listOfAllLogAnalyzers.add(systemInfoAnalyzer);
 
 
-        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs,troubleshooter);
+
+        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs,listOfAllLogAnalyzers);
 
         app.run();
     }

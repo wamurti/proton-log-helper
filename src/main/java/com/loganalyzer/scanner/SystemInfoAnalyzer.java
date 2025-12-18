@@ -1,100 +1,87 @@
 package com.loganalyzer.scanner;
 
 import com.loganalyzer.api.scanner.LogAnalyzer;
+import com.loganalyzer.util.FilePathHelper;
 
 import java.nio.file.Path;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class SystemInfoAnalyzer implements LogAnalyzer {
-    static String protonVersion;
-    static String gpuVendor;
-    static String gpuDriverVersion;
-    static String gpuRadv;
-    static String mesaVersion;
+    String appId;
+    String protonVersion;
+    String gpuModel;
+    String gpuDriver;
+    String gpuCodename;
+
+    List<SystemInfoAnalyzer> systemInfoResults;
+
+
     @Override
-    public Map<Path, String> analyze(Map<Path, List<String>> logFilesContent) {
+    public void analyze(Map<Path, List<String>> logFilesContent) {
+        List<SystemInfoAnalyzer> results = new ArrayList<>();
         for (var entry : logFilesContent.entrySet()) {
+            SystemInfoAnalyzer analyzer = new SystemInfoAnalyzer();
             Path path = entry.getKey();
+            analyzer.appId = FilePathHelper.extractAppIdFromLogPath(path);
             System.out.println("Fil: " + path);
             List<String> lines = entry.getValue();
-            getProtonVersion(lines);
-            getGpuVendor(lines);
+            analyzer.setProtonVersion(lines);
+            analyzer.setGpuModel(lines);
+            analyzer.setGpuDriver(lines);
+            analyzer.setGpuCodeName(lines);
+            results.add(analyzer);
+
+            System.out.println("Proton Version: " + analyzer.protonVersion + " | GPU Model: " + analyzer.gpuModel + " | GPU Driver: " + analyzer.gpuDriver + " | GPU Codename: " + analyzer.gpuCodename);
             System.out.println();
-
         }
-        return null;
+        systemInfoResults = results;
+
+    }
+    public List<SystemInfoAnalyzer> getAnalyzerResults() {
+        return systemInfoResults;
     }
 
-    private static void getProtonVersion(List<String> lines){
+    private void setGpuCodeName(List<String> lines) {
         for (String line : lines) {
-            if(line.contains("proton-")){
+            if (line.contains("info:  AMD")) {
+                String[] parts = line.split("\\(");
+                String[] gpuDriverPart = parts[1].split(" ");
+                gpuCodename = gpuDriverPart[1];
+                break;
+            }
+        }
+    }
+
+    private void setGpuDriver(List<String> lines) {
+        for (String line : lines) {
+            if (line.contains("info:  AMD")) {
+                String[] parts = line.split("\\(");
+                String[] gpuDriverPart = parts[1].split(" ");
+                gpuDriver = gpuDriverPart[0];
+                break;
+            }
+        }
+    }
+
+    private void setGpuModel(List<String> lines) {
+        for (String line : lines) {
+            if (line.contains("info:  AMD")) {
+                String[] parts = line.split("\\(");
+                gpuModel = parts[0].substring(parts[0].indexOf(":") + 1).trim();
+                break;
+            }
+        }
+    }
+
+    private void setProtonVersion(List<String> lines) {
+        for (String line : lines) {
+            if (line.contains("proton-")) {
                 protonVersion = line.split(" ")[2];
+                break;
             }
         }
 
     }
-    private static void getGpuVendor(List<String> lines){
-        //info:  Vulkan: 1.3.274 - NVIDIA GeForce RTX 3070 (NVIDIA 550.67)
-        //info:  Vulkan: 1.3.278 - AMD Radeon RX 6700 XT (RADV NAVI22) (Mesa 24.0.5-arch1.1)
-        for (String line : lines) {
-            if(line.contains("Vulkan:")){
-                if(line.contains("NVIDIA")){
-                    System.out.println("Found NVIDIA");
-                    gpuVendor = "NVIDIA";
-                    getNvidiaGpuDriverVersion(line);
-                }else if(line.contains("AMD")){
-                    System.out.println("Found AMD");
-                    gpuVendor = "AMD";
-                    getAmdGpuDriverVersion(line);
-                }
-            }
-        }
-        System.out.println("Proton version "+protonVersion+" vendor: "+gpuVendor+" driver version: "+gpuDriverVersion + " radv: "+gpuRadv+" mesa: "+mesaVersion);
-
-    }
-
-    private static void getNvidiaGpuDriverVersion(String line) {
-        var temp = line.split("\\(");
-        var tepList = temp[1].split(" ");
-        gpuDriverVersion  = tepList[1].replace(")", "");
-
-    }
-    private static void getAmdGpuDriverVersion(String line) {
-        var temp = line.split("\\(");
-        gpuRadv = temp[1].replace(")","");
-        mesaVersion = temp[2].replace(")","");
-        var tepList = temp[1].split(" ");
-        gpuDriverVersion  = tepList[1].replace(")", "");
-
-    }
-
-    //TODO: Structure accoring to below
-    /*
-    * Nvidia-exempel:
-
-Proton: 9.0-1c
-
-Vendor: NVIDIA
-
-GPU: RTX 3070
-
-Driver: 550.67
-
-Platform: X11 eller Wayland (om du kan hitta det i loggen, då det ofta orsakar problem).
-
-AMD-exempel:
-
-Proton: 9.0-1c
-
-Vendor: AMD
-
-GPU: RX 6700 XT
-
-Driver (Mesa): 24.0.5
-
-Kernel: (Valfritt, men bra på Linux)*/
-
-
 }
