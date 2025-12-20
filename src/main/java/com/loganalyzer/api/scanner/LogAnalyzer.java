@@ -1,6 +1,6 @@
 package com.loganalyzer.api.scanner;
 
-import com.loganalyzer.scanner.SystemInfoAnalyzer;
+import com.loganalyzer.analyzer.SystemInfoAnalyzer;
 
 import java.nio.file.Path;
 import java.util.List;

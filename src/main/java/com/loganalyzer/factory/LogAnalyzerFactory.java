@@ -1,12 +1,8 @@
 package com.loganalyzer.factory;
 
-import com.loganalyzer.api.scanner.LogAnalyzer;
-import com.loganalyzer.scanner.SystemInfoAnalyzer;
+import com.loganalyzer.analyzer.SystemInfoAnalyzer;
 
-
-import java.util.List;
-
-public class TroubleshooterFactory {
+public class LogAnalyzerFactory {
     private static SystemInfoAnalyzer systemInfoAnalyzerInstance;
 
     public static SystemInfoAnalyzer createSystemInfoAnalyzerSingleton() {

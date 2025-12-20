@@ -44,7 +44,7 @@ public class FilePathHelper {
     }
     public static Map<Path, List<String>> getLogsContent(List<LogFileLocator> logFilePathToLogs) {
         List<Path> protonLogs = convertFilePathsToLogs_ToPaths(logFilePathToLogs);
-        System.out.println("Getting file contents for Proton logs");
+        System.out.println("Getting file contents for Proton logs\n");
         try {
             Map<Path, List<String>> result = new HashMap<>();
             for (Path path : protonLogs) {

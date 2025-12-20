@@ -38,7 +38,11 @@ public class Presenter {
         }
         System.out.println();
 
-        System.out.println("Games found: "+appIds.size());
+        System.out.println("---------------------------------------");
+        System.out.println("Fetching info from protondb.com");
+        System.out.println("---------------------------------------");
+        System.out.println("\nGames found: "+appIds.size());
+
         for(SteamAppData steamAppData : gameDetailsSteam){
             String appIdString = String.valueOf(steamAppData.getSteam_appid());
             System.out.println(steamAppData.getName()+" --> "+ steamAppData.getSteam_appid());

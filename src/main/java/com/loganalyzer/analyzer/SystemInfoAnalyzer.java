@@ -1,4 +1,4 @@
-package com.loganalyzer.scanner;
+package com.loganalyzer.analyzer;
 
 import com.loganalyzer.api.scanner.LogAnalyzer;
 import com.loganalyzer.util.FilePathHelper;
@@ -21,6 +21,9 @@ public class SystemInfoAnalyzer implements LogAnalyzer {
     @Override
     public void analyze(Map<Path, List<String>> logFilesContent) {
         List<SystemInfoAnalyzer> results = new ArrayList<>();
+        System.out.println("---------------------------------------");
+        System.out.println("Analyzing proton logfile for system info...");
+        System.out.println("---------------------------------------\n");
         for (var entry : logFilesContent.entrySet()) {
             SystemInfoAnalyzer analyzer = new SystemInfoAnalyzer();
             Path path = entry.getKey();
@@ -37,6 +40,7 @@ public class SystemInfoAnalyzer implements LogAnalyzer {
             System.out.println();
         }
         systemInfoResults = results;
+        System.out.println("---------------------------------------");
 
     }
     public List<SystemInfoAnalyzer> getAnalyzerResults() {
@@ -77,7 +81,7 @@ public class SystemInfoAnalyzer implements LogAnalyzer {
 
     private void setProtonVersion(List<String> lines) {
         for (String line : lines) {
-            if (line.contains("proton-")) {
+            if (line.contains("Proton: ")) {
                 protonVersion = line.split(" ")[2];
                 break;
             }

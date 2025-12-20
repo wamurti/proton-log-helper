@@ -3,10 +3,10 @@ package com.loganalyzer;
 import com.loganalyzer.api.GameInfoProvider;
 import com.loganalyzer.api.LogFileLocator;
 import com.loganalyzer.api.scanner.LogAnalyzer;
-import com.loganalyzer.scanner.SystemInfoAnalyzer;
+import com.loganalyzer.analyzer.SystemInfoAnalyzer;
 import com.loganalyzer.factory.GameInfoProviderFactory;
 import com.loganalyzer.factory.LogLocatorFactory;
-import com.loganalyzer.factory.TroubleshooterFactory;
+import com.loganalyzer.factory.LogAnalyzerFactory;
 import com.loganalyzer.util.FilePathHelper;
 import com.loganalyzer.view.Presenter;
 
@@ -71,7 +71,7 @@ public class MainApp {
         listOfAllDataSources.add(steam);
 
         List<LogAnalyzer> listOfAllLogAnalyzers = new ArrayList<>();
-        SystemInfoAnalyzer systemInfoAnalyzer = TroubleshooterFactory.createSystemInfoAnalyzerSingleton();
+        SystemInfoAnalyzer systemInfoAnalyzer = LogAnalyzerFactory.createSystemInfoAnalyzerSingleton();
         // You can add more analyzers here in the future
         listOfAllLogAnalyzers.add(systemInfoAnalyzer);
 
