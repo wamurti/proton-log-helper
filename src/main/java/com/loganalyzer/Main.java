@@ -13,15 +13,43 @@ import com.loganalyzer.view.Presenter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainApp {
+public class Main {
     private final List<GameInfoProvider> gameInfoProviders;
     private final List<LogFileLocator> logFileLocators;
     private final List<LogAnalyzer> logAnalyzers;
 
-    public MainApp(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators, List<LogAnalyzer> logAnalyzers) {
+    public Main(List<GameInfoProvider> gameInfoProviders, List<LogFileLocator> logFileLocators, List<LogAnalyzer> logAnalyzers) {
         this.gameInfoProviders = gameInfoProviders;
         this.logFileLocators = logFileLocators;
         this.logAnalyzers = logAnalyzers;
+
+    }
+    public static void main(String[] args) {
+
+        LogFileLocator protonFilePaths = LogLocatorFactory.createProtonLogLocatorSingleton();
+        LogFileLocator amdFilePaths = LogLocatorFactory.createAmdLogLocatorSingleton();
+
+        List<LogFileLocator> listOfAllFilePathsToLogs = new ArrayList<>();
+        listOfAllFilePathsToLogs.add(protonFilePaths);
+        listOfAllFilePathsToLogs.add(amdFilePaths);
+
+        GameInfoProvider proton = GameInfoProviderFactory.createProtonDbSingleton();
+        GameInfoProvider steam = GameInfoProviderFactory.createSteamDbSingleton();
+
+        List<GameInfoProvider> listOfAllDataSources = new ArrayList<>();
+        listOfAllDataSources.add(proton);
+        listOfAllDataSources.add(steam);
+
+        List<LogAnalyzer> listOfAllLogAnalyzers = new ArrayList<>();
+        SystemInfoAnalyzer systemInfoAnalyzer = LogAnalyzerFactory.createSystemInfoAnalyzerSingleton();
+        // You can add more analyzers here in the future
+        listOfAllLogAnalyzers.add(systemInfoAnalyzer);
+
+
+
+        Main app = new Main(listOfAllDataSources, listOfAllFilePathsToLogs,listOfAllLogAnalyzers);
+
+        app.run();
     }
 
     public void run() {
@@ -54,31 +82,4 @@ public class MainApp {
 
     }
 
-    public static void main(String[] args) {
-
-        LogFileLocator protonFilePaths = LogLocatorFactory.createProtonLogLocatorSingleton();
-        LogFileLocator amdFilePaths = LogLocatorFactory.createAmdLogLocatorSingleton();
-
-        List<LogFileLocator> listOfAllFilePathsToLogs = new ArrayList<>();
-        listOfAllFilePathsToLogs.add(protonFilePaths);
-        listOfAllFilePathsToLogs.add(amdFilePaths);
-
-        GameInfoProvider proton = GameInfoProviderFactory.createProtonDbSingleton();
-        GameInfoProvider steam = GameInfoProviderFactory.createSteamDbSingleton();
-
-        List<GameInfoProvider> listOfAllDataSources = new ArrayList<>();
-        listOfAllDataSources.add(proton);
-        listOfAllDataSources.add(steam);
-
-        List<LogAnalyzer> listOfAllLogAnalyzers = new ArrayList<>();
-        SystemInfoAnalyzer systemInfoAnalyzer = LogAnalyzerFactory.createSystemInfoAnalyzerSingleton();
-        // You can add more analyzers here in the future
-        listOfAllLogAnalyzers.add(systemInfoAnalyzer);
-
-
-
-        MainApp app = new MainApp(listOfAllDataSources, listOfAllFilePathsToLogs,listOfAllLogAnalyzers);
-
-        app.run();
-    }
 }

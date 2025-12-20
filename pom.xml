@@ -64,7 +64,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>dev.steamanalyzer.Main</mainClass>
+                            <mainClass>com.loganalyzer.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>
@@ -88,7 +88,7 @@
                 <configuration>
                     <input>${project.build.directory}</input>
                     <mainJar>${project.artifactId}-${project.version}-jar-with-dependencies.jar</mainJar>
-                    <mainClass>dev.steamanalyzer.Main</mainClass>
+                    <mainClass>com.loganalyzer.Main</mainClass>
                     <name>SteamCrashAnalyzer</name>
                     <type>deb</type>
                     <destination/>
