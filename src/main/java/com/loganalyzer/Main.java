@@ -1,5 +1,6 @@
 package com.loganalyzer;
 
+import com.loganalyzer.analyzer.ErrorAnalyzer;
 import com.loganalyzer.api.GameInfoProvider;
 import com.loganalyzer.api.LogFileLocator;
 import com.loganalyzer.api.scanner.LogAnalyzer;
@@ -42,8 +43,10 @@ public class Main {
 
         List<LogAnalyzer> listOfAllLogAnalyzers = new ArrayList<>();
         SystemInfoAnalyzer systemInfoAnalyzer = LogAnalyzerFactory.createSystemInfoAnalyzerSingleton();
+        ErrorAnalyzer errorAnalyzer = LogAnalyzerFactory.createErrorAnalyzerSingleton();
         // You can add more analyzers here in the future
         listOfAllLogAnalyzers.add(systemInfoAnalyzer);
+        listOfAllLogAnalyzers.add(errorAnalyzer);
 
 
 

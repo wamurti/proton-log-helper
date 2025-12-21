@@ -8,5 +8,5 @@ import java.util.Map;
 
 public interface LogAnalyzer {
     void analyze(Map<Path, List<String>> logFilesContent);
-    List<SystemInfoAnalyzer> getAnalyzerResults();
+    List<LogAnalyzer> getAnalyzerResults();
 }

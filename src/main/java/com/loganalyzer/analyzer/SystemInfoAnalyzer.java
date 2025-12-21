@@ -15,12 +15,12 @@ public class SystemInfoAnalyzer implements LogAnalyzer {
     String gpuDriver;
     String gpuCodename;
 
-    List<SystemInfoAnalyzer> systemInfoResults;
+    List<LogAnalyzer> systemInfoResults;
 
 
     @Override
     public void analyze(Map<Path, List<String>> logFilesContent) {
-        List<SystemInfoAnalyzer> results = new ArrayList<>();
+        List<LogAnalyzer> results = new ArrayList<>();
         System.out.println("---------------------------------------");
         System.out.println("Analyzing proton logfile for system info...");
         System.out.println("---------------------------------------\n");
@@ -43,7 +43,7 @@ public class SystemInfoAnalyzer implements LogAnalyzer {
         System.out.println("---------------------------------------");
 
     }
-    public List<SystemInfoAnalyzer> getAnalyzerResults() {
+    public List<LogAnalyzer> getAnalyzerResults() {
         return systemInfoResults;
     }
 
